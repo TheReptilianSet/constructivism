@@ -100,11 +100,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       shape: const RoundedRectangleBorder(),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute<void>(
-                          builder: (_) => const PaywallScreen(),
-                        ),
-                      );
+                      if (_controller.page != 1) {
+                        _controller.animateToPage(
+                          1,
+                          curve: Curves.bounceIn,
+                          duration: Duration(milliseconds: 100),
+                        );
+                      } else {
+                        Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                            builder: (_) => const PaywallScreen(),
+                          ),
+                        );
+                      }
                     },
                     child: const Text('Продолжить'),
                   ),
@@ -119,10 +127,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 }
 
 class _OnboardingPage extends StatelessWidget {
-  const _OnboardingPage({
-    required this.title,
-    required this.subtitle,
-  });
+  const _OnboardingPage({required this.title, required this.subtitle});
 
   final String title;
   final String subtitle;
